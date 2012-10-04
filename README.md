@@ -7,8 +7,8 @@ job should be run. It is not a scheduler, it does not run the jobs.
 
 ### Usage
 
-Initialize parse-cron:
+#### Initialize parse-cron:
     parse_cron = CronParser.new("0 9,12,15 * * 2-4")
 
-Show next scheduled time:
+#### Show next scheduled time:
     parse_cron.next Time.now
