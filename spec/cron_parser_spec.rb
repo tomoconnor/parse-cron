@@ -47,6 +47,7 @@ describe "CronParser#next" do
     ["0 0 2-10/3 * *",  "2012-10-01 02:00",  "2012-10-02 00:00"],
     ["0 0 2-10/3 * *",  "2012-10-02 02:00",  "2012-10-05 00:00"],
     ["0 0 2-10/3 * *",  "2012-10-10 02:00",  "2012-11-02 00:00"],
+    ["45 23 7 3 *",     "2011-01-01 00:00",  "2011-03-07 23:45"],
   ].each do |line, now, expected_next|
     it "should return #{expected_next} for '#{line}' when now is #{now}" do
       now = parse_date(now)
@@ -84,5 +85,13 @@ describe "CronParser#last" do
 
       parser.last(now).should == expected_next
     end
+  end
+end
+
+describe "time source" do
+  it "should use an alternate specified time source" do
+    ExtendedTime = Class.new(Time)
+    ExtendedTime.should_receive(:local).once
+    CronParser.new("* * * * *",ExtendedTime).next
   end
 end
